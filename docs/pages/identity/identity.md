@@ -42,7 +42,7 @@ Independently of whether the identity is assigned following a convention or a st
 ## Identity for Agents
 
 ```{image} ../../_static/agent_badge.png
-:alt: Simplified Internet of Agent Stack
+:alt: Agent Badge Example
 :width: 100%
 :align: center
 ```
