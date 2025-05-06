@@ -79,7 +79,7 @@ The [`AGNTCY`](https://agntcy.org/) supports various types of verifiable credent
 
 One of the key `VCs` within the [`AGNTCY`](https://agntcy.org/) is the following:
 
-- `Agent Badge`: An enveloped `VC`, captured in the form of a JSON-LD object, that represents a specific definition of an Agent subject in the IoA. The definition follows a given schema (e.g., an OASF definition or an A2A Agent Card schema). An Agent subject could have multiple Agent Badges, each representing a different definition of the same core Agent or Agent subject. For instance, different software versions and/or patched releases of an Agent will have different Agent Badges. The same applies if the Agent's code is available in different forms (e.g, if it can be used and composed using different types of artifacts, such as a Docker container image or a python package), or if the source code can be reached at different sites or routing locators (e.g., through github or sites like hugging face), etc. Concrete examples of an Agent Badge can be found [`here`](../vc/agent-badge.md).
+- `Agent Badge`: An enveloped `VC`, captured in the form of a JSON-LD object, that represents a specific definition of an Agent subject in the IoA. The definition follows a given schema (e.g., an OASF definition or an A2A Agent Card schema). An Agent subject could have multiple Agent Badges, each representing a different definition of the same core Agent or Agent subject. For instance, different software versions and/or patched releases of an Agent will have different Agent Badges. The same applies if the Agent's code is available in different forms (e.g, if it can be used and composed using different types of artifacts, such as a Docker container image or a python package), or if the source code can be reached at different sites or routing locators (e.g., through github or sites like hugging face), etc. Concrete examples of an Agent Badge can be found [`here`](https://spec.identity.agntcy.org/docs/vc/agent-badge).
 
 <!---
 - `Agent Passport`: An enveloped `VC`, captured in the form of a JSON-LD object, that represents an Agent subject in the IoA. While an Agent subject could have "n" different Agent Badges or definitions, it will be associated to one "Agent Passport", which in turn will be associated to single Agent `ID`. Hence, there is:
@@ -97,7 +97,7 @@ The identity framework conceived by the `AGNTCY` allows not only to cryptographi
 <br />
 
 :::tip[IMPORTANT]
-As detailed in the [`Agent Badge Examples`](../vc/agent-badge.md), the combined use of an `Agent Badge` with `ResolverMetadata` objects enables the automatic and trustworthy discovery not only of the PubKey associated to the Agent issuer but also of the verification material to prove the authenticity and integrity of the Agent Badge, according to the assertionMethod defined in the `ResolverMetadata` object.
+As detailed in the [`Agent Badge Examples`](https://spec.identity.agntcy.org/docs/vc/agent-badge), the combined use of an `Agent Badge` with `ResolverMetadata` objects enables the automatic and trustworthy discovery not only of the PubKey associated to the Agent issuer but also of the verification material to prove the authenticity and integrity of the Agent Badge, according to the assertionMethod defined in the `ResolverMetadata` object.
 
 Furthermore, the use of Agent Badges provides a set of key properties in an IoA:
 
@@ -108,7 +108,77 @@ Furthermore, the use of Agent Badges provides a set of key properties in an IoA:
 
 # Flow Diagrams
 ## Agntcy - User Flows
+
 ### Create a New Agent
+
+This sequence diagram illustrates the process of creating, publishing, and registering an Agent's metadata and identity information within the Agntcy ecosystem.
+
+```mermaid
+sequenceDiagram
+autonumber
+
+Agent Creator->>e.g. Github: Publish agent source<br/>code and ACP manifest
+
+Agent Creator->>Identity CLI: Create and publish ResolverMetadata with an Agent ID
+
+Agent Creator->>Directory CLI: Create Agent OASF with Agent ID in identity extension
+
+Agent Creator->>Directory CLI: Publish OASF
+
+Agent Creator->>Identity CLI: Issue and Publish an Agent Badge (Verifiable Credential) with OASF
+```
+
 ### Update an Agent
+
+This sequence diagram illustrates the process of updating an existing Agent along with its associated metadata and identity information within the Agntcy ecosystem.
+
+```mermaid
+sequenceDiagram
+autonumber
+
+Agent Creator->>e.g. Github: Update and publish agent source<br/>code and ACP manifest
+
+Agent Creator->>Directory CLI: Update Agent OASF keeping the same<br/>Agent ID in identity extension
+
+Agent Creator->>Directory CLI: Publish OASF
+
+Agent Creator->>Identity CLI: Issue and Publish a new Agent Badge (Verifiable Credential) with OASF
+```
+
 ### Verify an Agent Locally
+
+This sequence diagram illustrates the local verification process of an Agent's authenticity, including its associated identity credentials, within the Agntcy ecosystem.
+
+```mermaid
+sequenceDiagram
+autonumber
+
+Agent Consumer->>Directory CLI: Discover and download the agent OASF
+
+Agent Consumer->>Agent Consumer: Extract the Agent ID from<br/>the OASF identity extension
+
+Agent Consumer->>Identity CLI: Resolve the Agent ID to get the Agent Badges
+
+Agent Consumer->>Agent Consumer: Find the Agent Badge<br/>that matches the OASF
+
+Agent Consumer->>Identity CLI: Verify the Agent Badge
+```
+
 ### Verify an Agent Using Search Endpoint
+
+This sequence diagram illustrates the process of verifying an Agent's authenticity using a search endpoint within the Agntcy ecosystem. This approach allows the Agent Verifier to locate and validate the correct Agent Badge by querying directly with both the Agent ID and OASF.
+
+```mermaid
+sequenceDiagram
+autonumber
+
+Agent Consumer->>Directory CLI: Discover and download the agent OASF
+
+Agent Consumer->>Agent Consumer: Extract the Agent ID from<br/>the OASF identity extension
+
+Agent Consumer->>Identity CLI: Search for the Agent Badge<br/>for the Agent ID + OASF
+
+Agent Consumer->>Identity CLI: Verify the Agent Badge
+```
+
+Additional flow diagrams can be found [`AGNTCY`](https://spec.identity.agntcy.org/docs/category/sequence-flows)
