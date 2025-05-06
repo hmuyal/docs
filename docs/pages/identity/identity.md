@@ -41,12 +41,40 @@ Independently of whether the identity is assigned following a convention or a st
 
 ## Identity for Agents
 
+```{image} ../../_static/agent_badge.png
+:alt: Simplified Internet of Agent Stack
+:width: 100%
+:align: center
+```
+
+The figure above depicts the main elements of an Agent's subject identifier:
+
+- Each Agent subject has a universally unique identifier named [`ID`](./id/definitions.md).
+- Each `ID` is associated 1:1 to a [`ResolverMetadata`](./id/definitions.md) object, enabling automated resolution and trustworthy verification of Agent IDs.
+- Each `ID` is also associated 1:n to an [`Agent Badge`](./vc/intro.md).
+
+Hence, in the [`AGNTCY`](https://agntcy.org/), an Agent subject is tied to a unique identifier linked to one or more `Verifiable Credentials (VCs)`, which contain information about the Agent, such as its ID, a schema definition (e.g., an OASF schema), and other metadata used for defining locators, authentication, MFA, etc. Agents can use this Badge for secure presentation, verification, and enabling trusted communications across multi-agent systems.
+
+Note that the same approach applies to MCP Servers and MASs, giving rise to ResolverMetadata and Badges also for MCP Servers and MASs.
+
 # Identifiers
 ## Definitions
+
+The [`AGNTCY`](https://agntcy.org/) supports various types of identities, referred to as IDs, which serve as universally unique identifiers for the main entities or subjects operated by the [`AGNTCY`](https://agntcy.org/), including Agents and Multi-Agent Systems (MAS).
+
 ### Key Identifiers
+
+Each ID is associated 1:1 with ResolverMetadata, which contains the necessary information to establish trust while trying to use or interact with an Agent or a MAS ID.
+ID: A universally unique identifier that represents the identity of a subject (e.g., an Agent or MAS).
+ResolverMetadata: Metadata, represented in the form of a JSON-LD object, containing cryptographic material and verification methods to resolve and establish trust with the associated ID (e.g., an Agent or MAS).
+
+Concrete examples with various IDs and associated ResolverMetadata can be found [`here`](https://spec.identity.agntcy.org/docs/id/examples)
 
 # Verifiable Credentials
 ## Definitions
+
+The [`AGNTCY`](https://agntcy.org/) supports various types of verifiable credentials, referred to as VCs. A verifiable credential is a specific way to express and present a set of claims made by an issuer, such as an agent definition (e.g., an [`OASF Definition`](https://schema.oasf.agntcy.org/objects/agent), or an [`A2A Agent Card`](https://github.com/google/A2A/blob/main/specification/json/a2a.json#AgentCard)), a deployment configuration, or an authorization claim that could be used during a MFA process.
+
 ### Key Verifiable Credentials (VCs)
 
 # Flow Diagrams
